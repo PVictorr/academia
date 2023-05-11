@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (academia)" project-jdk-type="Python SDK" />
+=======
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10" project-jdk-type="Python SDK" />
+>>>>>>> 5a16e447470ad47c8f06359fe824d0ab285c1fd1
   <component name="PyCharmProfessionalAdvertiser">
     <option name="shown" value="true" />
   </component>

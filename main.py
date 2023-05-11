@@ -12,7 +12,11 @@ app.secret_key = "senha123"
 DB_HOST = "localhost"
 DB_USER = "root"
 DB_PASS = ""
+<<<<<<< HEAD
+DB_NAME = "ACADEMIADB"
+=======
 DB_NAME = "academiadb"
+>>>>>>> 5a16e447470ad47c8f06359fe824d0ab285c1fd1
 
 app.auth = {
     # acao: { perfil:permissao }
@@ -91,7 +95,11 @@ def cadastrar_exercicios():
 
 
 
+<<<<<<< HEAD
+        exercicios = Exercicios(nome_excc, series, repeticoes)
+=======
         exercicios = Exercicios (nome_excc, series, repeticoes)
+>>>>>>> 5a16e447470ad47c8f06359fe824d0ab285c1fd1
 
 
         dao = exercicioDAO(get_db())
