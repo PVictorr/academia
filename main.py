@@ -11,12 +11,8 @@ app.secret_key = "senha123"
 
 DB_HOST = "localhost"
 DB_USER = "root"
+DB_NAME = "mydb"
 DB_PASS = ""
-<<<<<<< HEAD
-DB_NAME = "ACADEMIADB"
-=======
-DB_NAME = "academiadb"
->>>>>>> 5a16e447470ad47c8f06359fe824d0ab285c1fd1
 
 app.auth = {
     # acao: { perfil:permissao }
@@ -38,6 +34,10 @@ def autorizacao():
     if acao in list(acoes):
         if session.get('logado') is None:
             return redirect(url_for('login'))
+        else:
+            tipo = session['logado']
+            if app.auth[acao] == 0:
+                return redirect(url_for('painel'))
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -60,30 +60,30 @@ def close_connection(exception):
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("login.html")
 
 
-@app.route('/cadastrar', methods=['GET', 'POST'])
-def cadastrar():
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    msg = ''
     if request.method == "POST":
         # valor = request.form['campoHTML']
         nome = request.form['nome']
         email = request.form['email']
         senha = request.form['senha']
-        objetivo = request.form['objetivo']
 
-        usuario = Usuario(nome, email, senha, objetivo)
+        usuario = Usuario(nome, email, senha)
 
         dao = UsuarioDAO(get_db())
         codigo = dao.inserir(usuario)
 
         if codigo > 0:
-            flash("Cadastrado com sucesso! Código %d" % codigo, "success")
+            msg = ("Cadastrado com sucesso!")
         else:
-            flash("Erro ao cadastrar!", "danger")
+            msg = ("Erro ao cadastrar!")
 
     vartitulo = "Cadastro"
-    return render_template("cadastrar.html", titulo=vartitulo)
+    return render_template("register.html", titulo=vartitulo, msg=msg)
 
 
 @app.route('/cadastrar_treino', methods=['GET', 'POST'])
@@ -92,14 +92,6 @@ def cadastrar_exercicios():
         nome_excc = request.form['nome_excc']
         series = request.form['series']
         repeticoes = request.form['repeticoes']
-
-
-
-<<<<<<< HEAD
-        exercicios = Exercicios(nome_excc, series, repeticoes)
-=======
-        exercicios = Exercicios (nome_excc, series, repeticoes)
->>>>>>> 5a16e447470ad47c8f06359fe824d0ab285c1fd1
 
 
         dao = exercicioDAO(get_db())
@@ -161,9 +153,9 @@ def login():
                 'nome': usuario[3],
                 'email': usuario[1],
             }
-            return redirect(url_for('painel'))
+            return redirect(url_for('index'))
         else:
-            flash("Erro ao efetuar login!", "danger")
+            flash("Erro ao efetuar login!")
 
     return render_template("login.html", titulo="Login")
 
@@ -175,7 +167,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/painel')
+@app.route('/index')
 def painel():
     return render_template("index.html", titulo="Painel")
 
