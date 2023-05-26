@@ -4,13 +4,13 @@ class UsuarioDAO():
 
     def inserir(self, usuario):
         try:
-            sql = "INSERT INTO usuario (nome,email,senha) VALUES( %s, %s, %s)"
+            sql = "INSERT INTO Usuario (nome,email,senha) VALUES( %s, %s, %s)"
 
             cursor = self.con.cursor()
             cursor.execute(sql, (usuario.nome, usuario.email, usuario.senha))
             self.con.commit()
-            #codigo = cursor.lastrowid
-            return 1
+            codigo = cursor.lastrowid
+            return codigo
         except:
             return 0
 
