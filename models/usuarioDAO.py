@@ -4,10 +4,10 @@ class UsuarioDAO():
 
     def inserir(self, usuario):
         try:
-            sql = "INSERT INTO Usuario (nome,email,senha) VALUES( %s, %s, %s)"
+            sql = "INSERT INTO Usuario(nome, sobrenome, email, senha) VALUES(%s, %s, %s, %s)"
 
             cursor = self.con.cursor()
-            cursor.execute(sql, (usuario.nome, usuario.email, usuario.senha))
+            cursor.execute(sql, (usuario.nome, usuario.sobrenome, usuario.email, usuario.senha,))
             self.con.commit()
             codigo = cursor.lastrowid
             return codigo
@@ -24,3 +24,11 @@ class UsuarioDAO():
             return usuario
         except:
             return None
+
+    def obter(self, email):
+        sql = "SELECT * FROM Usuario WHERE email=%s"
+
+        cursor = self.con.cursor()
+        cursor.execute(sql, (email,))
+
+        return cursor.fetchone()
